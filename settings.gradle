@@ -1,0 +1,3 @@
+rootProject.name = 'az-servicebus'
+include 'sb-lib'
+
