@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+    id 'application'
+    id "com.github.johnrengelman.shadow" version "4.0.4"
+}
+
+group 'com.az.servicebus.tools'
+version '1.0'
+
+mainClassName = "com.az.servicebus.lib.Application"
+
+Iterable<?> programArgs = [
+        "-n", "jitendra-sb-integration",
+        "-t", "ack-test",
+        "-k", "Mz56tFasE+NSuI1/Mk4U+DTqgPiR5u5bTdK4lZs9HY4=",
+        "-N", "RootManageSharedAccessKey"
+]
+
+sourceCompatibility = 11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'com.microsoft.azure', name: 'azure-servicebus', version: '1.2.8'
+    implementation group: 'args4j', name: 'args4j', version: '2.33'
+    // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
+
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+}
+
+task runDS(type: JavaExec) {
+    main = "$mainClassName"
+    classpath = sourceSets.main.runtimeClasspath
+    programArgs += ["-t", "query-svc", "-a", "query-svc-ack", "-m", "PUBLISHER"]
+    args(programArgs)
+}
+
+task runQS(type: JavaExec) {
+    main = "$mainClassName"
+    classpath = sourceSets.main.runtimeClasspath
+    programArgs += ["-t", "query-svc", "-a", "query-svc-ack", "-m", "CONSUMER", "-s", "domain-main"]
+    args(programArgs)
+}

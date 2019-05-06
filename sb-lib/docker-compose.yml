@@ -1,0 +1,9 @@
+version: '3.3'
+
+services:
+  ds1:
+    image: sb-lib:1.0
+    command: --namespace=jitendra-sb-integration --access-key=Mz56tFasE+NSuI1/Mk4U+DTqgPiR5u5bTdK4lZs9HY4= --access-key-name=RootManageSharedAccessKey --topic=query-svc --ack-topic=query-svc-ack --mode=PUBLISHER
+  qs1:
+    image: sb-lib:1.0
+    command: --namespace=jitendra-sb-integration --access-key=Mz56tFasE+NSuI1/Mk4U+DTqgPiR5u5bTdK4lZs9HY4= --access-key-name=RootManageSharedAccessKey --topic=query-svc --ack-topic=query-svc-ack --mode=CONSUMER --subscription=docker-main
